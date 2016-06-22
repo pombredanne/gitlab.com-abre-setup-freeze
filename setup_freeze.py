@@ -29,7 +29,7 @@ def parse_requirement(requirement):
     return re.match(r'([^\[=<>!]+)(\[[^\]]\])?(<=|>=|==|!=|<|>)?(.+)?', requirement).groups()
 
 
-if __name__ == "__main__":
+def main():
     with open('setup.py', 'r') as f:
         setup_py_contents = f.read()
 
