@@ -53,8 +53,17 @@ def main():
                 f.write(package)
                 if extras:
                     f.write(extras)
-                f.write('==')
-                f.write(package_map[package.lower()])
+
+                try:
+                    the_version = package_map[package.lower()]
+                except KeyError:
+                    f.write(comparison or '')
+                    f.write(version or '')
+                else:
+                    f.write('==')
+                    f.write(package_map[package.lower()])
+
+
                 offset = col + len(item) + 1
             f.write(line[offset:])
             if i != len(setup_py_lines):
