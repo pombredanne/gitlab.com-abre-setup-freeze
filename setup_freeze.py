@@ -8,7 +8,7 @@ from collections import defaultdict
 
 class RequirementFinder(ast.NodeVisitor):
     def visit_Call(self, node):
-        if node.func.id == 'setup':
+        if getattr(node.func, 'id', None) == 'setup':
             try:
                 install_requires = next(x for x in node.keywords if x.arg == 'install_requires')
             except StopIteration:
@@ -26,7 +26,7 @@ class RequirementFinder(ast.NodeVisitor):
 
 
 def parse_requirement(requirement):
-    return re.match(r'([^\[=<>!]+)(\[[^\]]\])?(<=|>=|==|!=|<|>)?(.+)?', requirement).groups()
+    return re.match(r'([^\[=<>!]+)(\[[^\]]+\])?(<=|>=|==|!=|<|>)?(.+)?', requirement).groups()
 
 
 def main():
